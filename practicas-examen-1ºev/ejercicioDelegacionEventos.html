@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio JS - Buscador y favoritos en rejilla</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .controles-superiores {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    #buscador {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+    }
+
+    #catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    .ficha {
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .ficha.oculta {
+      display: none;
+    }
+
+    .ficha.favorita {
+      border-color: #d97706;
+      background: #fffbeb;
+    }
+
+    .categoria {
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+  </style>
+</head>
+<body>
+  <div class="controles-superiores">
+    <input type="search" id="buscador" placeholder="Buscar por nombre o categoría..." />
+    <button type="button" id="btn-solo-favoritos">Solo favoritos: OFF</button>
+    <div>Visibles: <strong id="contador-visibles">4</strong></div>
+  </div>
+
+  <div id="catalogo">
+    <article class="ficha" data-id="1" data-categoria="js">
+      <h3 class="nombre">Clausuras y ámbito léxico</h3>
+      <span class="categoria">Categoría: JS</span>
+      <button type="button" class="btn-fav">Marcar favorito</button>
+    </article>
+
+    <article class="ficha" data-id="2" data-categoria="dom">
+      <h3 class="nombre">Delegación con closest()</h3>
+      <span class="categoria">Categoría: DOM</span>
+      <button type="button" class="btn-fav">Marcar favorito</button>
+    </article>
+
+    <article class="ficha" data-id="3" data-categoria="js">
+      <h3 class="nombre">Memoización con caché privada</h3>
+      <span class="categoria">Categoría: JS</span>
+      <button type="button" class="btn-fav">Marcar favorito</button>
+    </article>
+
+    <article class="ficha" data-id="4" data-categoria="dom">
+      <h3 class="nombre">Manipulación dinámica de nodos</h3>
+      <span class="categoria">Categoría: DOM</span>
+      <button type="button" class="btn-fav">Marcar favorito</button>
+    </article>
+  </div>
+
+  <script>
+    const catalogo = document.getElementById("catalogo");
+    const contadorVisible = document.getElementById("contador-visibles");
+    const btnSoloFavoritos=document.getElementById("btn-solo-favoritos");
+    const input = document.getElementById("buscador");
+
+    function actualizarVisibles(){
+        let fichas = document.querySelectorAll("#catalogo .ficha");
+        let ocultas = catalogo.querySelectorAll(".oculta");
+        let cantidad = fichas.length - ocultas.length
+        contadorVisible.textContent = cantidad;    
+    }   
+
+    function cambiarFiltroFavorito(){
+        let soloFavoritos = false;
+        function cambiar(){
+            soloFavoritos = !soloFavoritos;
+        }
+        function ver(){
+            return soloFavoritos;
+        }
+        return{
+            cambiar, ver
+        }
+    }
+    let cambiarFiltro = cambiarFiltroFavorito();
+    
+    function mostrarFichas(){
+        let fichas = document.querySelectorAll("#catalogo .ficha");
+        let fichaBuscada =input.value;
+        let buscado = fichaBuscada.trim().toLowerCase()
+        const soloFav = cambiarFiltro.ver();
+        fichas.forEach(ficha => {
+            
+            let titulo = ficha.querySelector(".nombre").textContent.trim().toLowerCase()
+            let categoria = ficha.dataset.categoria.trim().toLowerCase()
+            let favEncontrado = !soloFav || ficha.classList.contains("favorita");          
+            let buscadoEncontrado = titulo.includes(buscado)||categoria.includes(buscado)
+
+
+            let encontrado = buscadoEncontrado && favEncontrado
+
+            ficha.classList.toggle("oculta",!encontrado)
+            actualizarVisibles()
+            
+
+        });
+    }
+
+    input.addEventListener("input", function(){
+        mostrarFichas()
+    });
+
+    btnSoloFavoritos.addEventListener("click", function(){
+        cambiarFiltro.cambiar();
+        let activado="Solo favoritos: ON";
+        let desactivado="Solo favoritos: OFF";
+        cambiarFiltro.ver() ? 
+        btnSoloFavoritos.textContent=activado:
+        btnSoloFavoritos.textContent=desactivado
+        mostrarFichas();
+    });
+
+    catalogo.addEventListener("click", (event)=>{
+        if(event.target.closest(".btn-fav")){
+            let article = event.target.closest(".ficha");
+            article.classList.toggle("favorita")
+            let btnFav = event.target.closest(".btn-fav");
+            if(btnFav.textContent === "Marcar favorito"){
+                btnFav.textContent = "Deshacer favorito"
+            }else{
+                btnFav.textContent = "Marcar favorito"; 
+            }
+            
+        }
+    });
+  </script>
+</body>
+</html>

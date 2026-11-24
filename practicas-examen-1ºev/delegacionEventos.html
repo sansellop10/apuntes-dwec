@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delegación de eventos - Tarjetas de productos</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 680px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    #grid-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .tarjeta {
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .tarjeta.destacada {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .cantidad {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button type="button" id="btn-nueva-tarjeta">+ Añadir producto</button>
+    <div>Total unidades: <strong id="total-unidades">0</strong></div>
+  </div>
+
+  <div id="grid-productos">
+    <article class="tarjeta" data-id="1" data-precio="15">
+      <h3 class="titulo">Teclado mecánico</h3>
+      <p class="precio">15 €</p>
+      <div class="controles">
+        <button type="button" class="btn-restar">-</button>
+        <span class="cantidad">0</span>
+        <button type="button" class="btn-sumar">+</button>
+      </div>
+      <button type="button" class="btn-destacar">Destacar</button>
+    </article>
+
+    <article class="tarjeta" data-id="2" data-precio="25">
+      <h3 class="titulo">Ratón inalámbrico</h3>
+      <p class="precio">25 €</p>
+      <div class="controles">
+        <button type="button" class="btn-restar">-</button>
+        <span class="cantidad">0</span>
+        <button type="button" class="btn-sumar">+</button>
+      </div>
+      <button type="button" class="btn-destacar">Destacar</button>
+    </article>
+  </div>
+
+  <script>
+    const gridProducts = document.getElementById("grid-productos");
+    const totalUnidades = document.getElementById("total-unidades");
+    const btnNuevaTarjeta = document.getElementById("btn-nueva-tarjeta");
+
+
+
+    function actualizarTotalUnidades(){
+        let span = gridProducts.querySelectorAll(".cantidad")
+        let total = 0;
+        for(const cantidad of span){
+            total+=Number(cantidad.textContent);     
+        }
+        totalUnidades.textContent = total;
+    }
+
+    function addNewCard(){
+        const article = document.createElement("article");
+        const h3 = document.createElement("h3");
+        const p = document.createElement("p");
+        const div = document.createElement("div");
+        const spanCantidad = document.createElement("span");
+        const btnSumar = document.createElement("button");
+        const btnRestar = document.createElement("button");
+        const btnDestacar = document.createElement("button");
+
+        article.classList.add("tarjeta")
+        h3.classList.add("titulo");
+        p.classList.add("precio");
+        div.classList.add("controles");
+        spanCantidad.classList.add("cantidad");
+        btnSumar.classList.add("btn-sumar");
+        btnRestar.classList.add("btn-restar");
+        btnDestacar.classList.add("btn-destacar");
+        
+        btnSumar.type = "button";
+        btnRestar.type = "button";
+        btnDestacar.type = "button";
+
+        h3.textContent = "Producto X";
+        p.textContent = "X €";
+        spanCantidad.textContent = 0;
+        btnSumar.textContent ="+";
+        btnRestar.textContent="-";
+        btnDestacar.textContent="Destacar";
+
+        div.appendChild(btnRestar);
+        div.appendChild(spanCantidad);
+        div.appendChild(btnSumar);
+        
+        article.appendChild(h3)
+        article.appendChild(p)
+        article.appendChild(div)
+        article.appendChild(btnDestacar)
+
+        gridProducts.appendChild(article)
+
+
+        
+
+    }
+
+    btnNuevaTarjeta.addEventListener("click", (event)=>{
+        addNewCard();
+    });
+
+    gridProducts.addEventListener("click", (event)=>{
+        if(event.target.closest(".btn-sumar")){
+            try{
+                const card = event.target.closest("article")
+                let price = Number(card.querySelector(".cantidad").textContent);
+                let newPrice = price+1;
+                card.querySelector(".cantidad").textContent = newPrice;  
+                actualizarTotalUnidades();
+            }catch(error){
+                console.log(error.message);
+            }
+        }else if(event.target.closest(".btn-restar")){
+            try{
+                const card = event.target.closest("article");
+                let price = Number(card.querySelector(".cantidad").textContent);
+                
+                if(price !==0){
+                    let newPrice = price-1;
+                    card.querySelector(".cantidad").textContent=newPrice;
+                    actualizarTotalUnidades();
+                }
+            }catch(error){
+                error.message
+            }
+        }else if(event.target.closest(".btn-destacar")){
+            const card = event.target.closest("article");
+            card.classList.toggle("destacada")
+            let btnDestacar = event.target.closest(".btn-destacar")
+
+            if(btnDestacar.textContent === "Destacar"){
+                btnDestacar.textContent = "Quitar destacada";
+            }else{
+                btnDestacar.textContent = "Destacar"
+            }
+        }
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio Integrado - UD03 Módulos y Herramientas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; line-height: 1.6; }
+        section { background: #f9f9f9; padding: 15px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 8px 12px; cursor: pointer; margin-right: 5px; }
+        .error { color: #d9534f; font-weight: bold; margin-top: 5px; }
+        #marcador-tenis { font-size: 1.2em; color: #0275d8; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>Panel Modular Integrado - UD03</h1>
+    <p>Proyecto desarrollado con Vite, Módulos ES6 y Gestión de Excepciones.</p>
+
+    <!-- EJERCICIO 1: Contador y Reset (Basado en UD03 Ejercicio 1) -->
+    <section>
+        <h2>1. Módulo Contador de Interacciones</h2>
+        <p>Párrafo contador: <span id="contador-valor">0</span></p>
+        <button id="btn-incrementar">Incrementar</button>
+        <button id="btn-reset-contador">Reset</button>
+    </section>
+
+    <!-- EJERCICIO 2: Puntuación de Tenis y Excepciones (Basado en UD03 Ejercicio 2) -->
+    <section>
+        <h2>2. Módulo de Puntuación de Tenis</h2>
+        <p>Resultado actual: <span id="marcador-tenis">Jugador 1: 0 Jugador 2: 0</span></p>
+        <button id="btn-punto-1">Punto Jugador 1</button>
+        <button id="btn-punto-2">Punto Jugador 2</button>
+        <button id="btn-reiniciar-tenis">Reiniciar Juego</button>
+        <div id="mensaje-error" class="error"></div>
+    </section>
+
+    <!-- EJERCICIO 3: Transformación estilo NPM (Basado en UD03 Ejercicio 3) -->
+    <section>
+        <h2>3. Módulo Utilitario (Estilo NPM 'bananize')</h2>
+        <p>Transforma el historial de acciones en un array de cadenas 'banana'.</p>
+        <button id="btn-bananize">Aplicar Bananize al Historial</button>
+        <ul id="lista-historial"></ul>
+    </section>
+
+    <!-- Punto de entrada principal para el empaquetador Vite -->
+    <script>
+        
+    </script>
+</body>
+</html>    

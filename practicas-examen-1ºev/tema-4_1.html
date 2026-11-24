@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio Integrado - UD04 Clases y Objetos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.5; }
+        section { background: #f4f4f4; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ccc; }
+        button { padding: 6px 12px; cursor: pointer; margin-right: 5px; margin-bottom: 5px; }
+        .error { color: #d9534f; font-weight: bold; }
+        .tablero { display: grid; grid-template-columns: repeat(3, 50px); gap: 5px; margin-top: 10px; }
+        .celda-tres { width: 50px; height: 50px; font-size: 20px; font-weight: bold; text-align: center; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>Simulador Integrado - UD04 (Clases y Objetos)</h1>
+
+    <!-- SECCIÓN 1: LA CÉLULA (Literal y Mitosis) -->
+    <section>
+        <h2>1. Simulación de Mitosis Celular</h2>
+        <p>Estado de la Célula Principal: <span id="info-celula">Energía: 100, ID: Original</span></p>
+        <button id="btn-mitosis">Realizar Mitosis</button>
+        <div id="contenedor-hijos"></div>
+    </section>
+
+    <!-- SECCIÓN 2: EL GATO VIRTUAL -->
+    <section>
+        <h2>2. Gato Virtual</h2>
+        <p>Estado del Gato: <span id="info-gato">Cargando...</span></p>
+        <button id="btn-alimentar">Alimentar</button>
+        <button id="btn-dormir">Dormir</button>
+        <button id="btn-jugar">Jugar</button>
+        <button id="btn-tiempo">Dejar pasar tiempo (2000ms)</button>
+    </section>
+
+    <!-- SECCIÓN 3: TRES EN RAYA -->
+    <section>
+        <h2>3. Tres en Raya Modular</h2>
+        <p>Turno / Estado: <span id="info-tres">Partida en curso</span></p>
+        <div class="tablero" id="tablero-juego">
+            <button class="celda-tres" data-pos="0"></button>
+            <button class="celda-tres" data-pos="1"></button>
+            <button class="celda-tres" data-pos="2"></button>
+            <button class="celda-tres" data-pos="3"></button>
+            <button class="celda-tres" data-pos="4"></button>
+            <button class="celda-tres" data-pos="5"></button>
+            <button class="celda-tres" data-pos="6"></button>
+            <button class="celda-tres" data-pos="7"></button>
+            <button class="celda-tres" data-pos="8"></button>
+        </div>
+        <button id="btn-reiniciar-tres" style="margin-top: 10px;">Reiniciar Partida</button>
+        <p id="error-tres" class="error"></p>
+    </section>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

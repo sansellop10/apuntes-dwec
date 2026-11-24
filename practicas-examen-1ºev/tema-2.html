@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Solución Integrada - UD02 Manejo del Navegador</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        #panel-padre { width: 350px; height: 100px; border: 3px solid #333; padding: 10px; display: flex; gap: 15px; align-items: center; justify-content: center; transition: background-color 0.3s; margin-bottom: 20px; }
+        .caja-color { width: 70px; height: 70px; cursor: pointer; border: 1px solid #000; }
+        .item-p { padding: 8px; margin: 5px 0; background: #eef; border: 1px solid #ccd; cursor: pointer; user-select: none; }
+        .oculto { display: none; }
+        pre { background: #f4f4f4; padding: 10px; border: 1px solid #ddd; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <!-- EJERCICIO 1: Posición del ratón -->
+    <p id="coordenadas" style="font-weight: bold; color: #0056b3;">Posición del ratón - X: 0 | Y: 0</p>
+
+    <hr>
+
+    <!-- EJERCICIO 4: Índice automático de la página -->
+    <h2>Tabla de Contenidos (Índice Automático)</h2>
+    <pre id="indice"></pre>
+
+    <hr>
+
+    <!-- EJERCICIO 3: Cambio de color con función única -->
+    <h2>Cambio de Color del Contenedor</h2>
+    <div id="panel-padre">
+        <div class="caja-color" style="background-color: tomato;" data-color="tomato"></div>
+        <div class="caja-color" style="background-color: mediumseagreen;" data-color="mediumseagreen"></div>
+        <div class="caja-color" style="background-color: royalblue;" data-color="royalblue"></div>
+    </div>
+
+    <hr>
+
+    <!-- EJERCICIO 2: Elementos autodestructibles -->
+    <h2>Elementos Autodestructibles</h2>
+    <div id="contenedor-p"></div>
+    <button id="btn-reaparecer" style="margin-top: 10px; padding: 6px 12px; cursor: pointer;">Reaparecer</button>
+
+    <hr>
+
+    <!-- Encabezados de prueba para que el Ejercicio 4 genere el índice -->
+    <h1>Tema 1: Introducción a JavaScript</h1>
+    <h2>Apartado 1.1: Eventos</h2>
+    <h2>Apartado 1.2: El DOM</h2>
+    <h1>Tema 2: Manejo del Navegador</h1>
+    <h2>Introducción</h2>
+    <h3>Detalles avanzados</h3>
+
+    <script>
+        // ==========================================
+        // EJERCICIO 1: DÓNDE ESTÁ EL RATÓN
+        // ==========================================
+        document.addEventListener('mousemove', (e) => {
+            const pCoord = document.getElementById('coordenadas');
+            pCoord.textContent = `Posición del ratón - X: ${e.clientX} | Y: ${e.clientY}`;
+        });
+
+
+        // ==========================================
+        // EJERCICIO 2: ELEMENTOS AUTODESTRUCTIBLES
+        // ==========================================
+        const contenedorP = document.getElementById('contenedor-p');
+        const btnReaparecer = document.getElementById('btn-reaparecer');
+
+        // Generar 10 elementos <p> dinámicamente
+        for (let i = 1; i <= 10; i++) {
+            const p = document.createElement('p');
+            p.className = 'item-p';
+            p.textContent = `Elemento párrafo dinámico número ${i}`;
+            
+            // Clic izquierdo: oculta el elemento (display: none)
+            p.addEventListener('click', () => {
+                p.classList.add('oculto');
+            });
+
+            // Clic derecho: elimina completamente del DOM y previene menú contextual
+            p.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                p.remove();
+            });
+
+            contenedorP.appendChild(p);
+        }
+
+        // Botón "Reaparecer" (vuelve a mostrar los ocultos, respeta los eliminados)
+        btnReaparecer.addEventListener('click', () => {
+            const ocultos = contenedorP.querySelectorAll('.oculto');
+            ocultos.forEach(p => p.classList.remove('oculto'));
+        });
+
+
+        // ==========================================
+        // EJERCICIO 3: CAMBIO DE COLOR (FUNCIÓN ÚNICA)
+        // ==========================================
+        const panelPadre = document.getElementById('panel-padre');
+        const cajasColor = document.querySelectorAll('.caja-color');
+
+        // Única función manejadora de eventos para los tres elementos
+        function cambiarColorPadre(e) {
+            const colorElegido = e.target.getAttribute('data-color');
+            panelPadre.style.backgroundColor = colorElegido;
+        }
+
+        // Asignar la misma función a cada uno de los divs hijos
+        cajasColor.forEach(caja => {
+            caja.addEventListener('click', cambiarColorPadre);
+        });
+
+
+        // ==========================================
+        // EJERCICIO 4: ÍNDICE DE UNA PÁGINA WEB
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Selecciona todos los encabezados de forma genérica
+            const encabezados = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            const preIndice = document.getElementById('indice');
+            
+            let contenidoIndice = "";
+            let contadores = [0, 0, 0, 0, 0, 0]; // Control de numeración por niveles
+
+            encabezados.forEach(encabezado => {
+                // Evitamos procesar elementos que estén dentro del propio pre o contenedor del índice si los hubiera
+                const nivel = parseInt(encabezado.tagName.substring(1)) - 1; // h1 -> 0, h2 -> 1, etc.
+                
+                contadores[nivel]++;
+                // Reiniciar los contadores de los niveles inferiores
+                for (let i = nivel + 1; i < contadores.length; i++) {
+                    contadores[i] = 0;
+                }
+
+                // Construir la numeración jerárquica (ej. 1.1., 2.1.2.)
+                let numeracion = "";
+                for (let i = 0; i <= nivel; i++) {
+                    numeracion += contadores[i] + ".";
+                }
+
+                // Generar indentación con espacios para la etiqueta <pre>[cite: 3, 4]
+                const indentacion = "    ".repeat(nivel);
+                contenidoIndice += `${indentacion}${numeracion} ${encabezado.textContent}\n`;
+            });
+
+            preIndice.textContent = contenidoIndice;
+        });
+    </script>
+</body>
+</html>

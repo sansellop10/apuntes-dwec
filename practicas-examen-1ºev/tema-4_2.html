@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio Integrado - UD04 W2</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.5; }
+        section { background: #f4f4f4; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ccc; }
+        button { padding: 8px 14px; cursor: pointer; margin-right: 5px; }
+        pre { background: #222; color: #0f0; padding: 10px; font-family: monospace; border-radius: 4px; }
+        .grid-estacion { display: grid; grid-template-columns: repeat(5, 40px); gap: 4px; margin-top: 10px; }
+        .celda-mapa { width: 40px; height: 40px; background: #fff; border: 1px solid #999; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>Simulador Espacial Integrado - Polígonos, Roombas y Textos</h1>
+
+    <!-- SECCIÓN 1: ZONAS POLIGONALES Y ROOMBAS -->
+    <section>
+        <h2>1. Estación Espacial y Robots Roombas</h2>
+        <p>Controla el avance por turnos de los robots en la estación cilíndrica de 5x5[cite: 17].</p>
+        <button id="btn-avanzar-turno">Avanzar Turno Robot</button>
+        <div class="grid-estacion" id="mapa-estacion"></div>
+    </section>
+
+    <!-- SECCIÓN 2: PROCESADOR DE TEXTOS PARA INFORMES -->
+    <section>
+        <h2>2. Informe Generado por el Procesador de Textos</h2>
+        <p>Estado formateado a ancho fijo (30 caracteres)[cite: 16]:</p>
+        <pre id="salida-procesador">Cargando informe...</pre>
+    </section>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

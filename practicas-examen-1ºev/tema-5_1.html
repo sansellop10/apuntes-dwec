@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio Integrado - UD05 Programación Funcional</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.5; }
+        section { background: #f9f9f9; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ddd; }
+        button { padding: 8px 12px; cursor: pointer; margin-right: 5px; }
+        pre { background: #222; color: #0f0; padding: 10px; font-family: monospace; border-radius: 4px; }
+        input { padding: 6px; width: 200px; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>Motor Funcional Integrado - UD05</h1>
+    <p>Demostración de funciones puras, clausuras, currying y composición funcional.</p>
+
+    <!-- SECCIÓN 1 Y 2: PURIFICACIÓN E IDS -->
+    <section>
+        <h2>1 & 2. Procesamiento Puro y Generador de IDs</h2>
+        <p>Introduce números separados por comas (ej. 10,20,30):</p>
+        <input type="text" id="input-array" value="10, 20, 30, 40">
+        <button id="btn-procesar">Procesar con Función Pura</button>
+        <p>Resultado Puro: <span id="res-puro">-</span></p>
+        <p>ID Generado (longitud 4): <span id="res-id">-</span></p>
+    </section>
+
+    <!-- SECCIÓN 3: MULTIPLICACIÓN PEREZOSA -->
+    <section>
+        <h2>3. Multiplicación Perezosa (Currying)</h2>
+        <p>Calcula mediante <code>lazyMultiply(7, 4)</code> o <code>lazyMultiply(5)(10)</code>[cite: 21]:</p>
+        <button id="btn-lazy-1">Probar lazyMultiply(7, 4)</button>
+        <button id="btn-lazy-2">Probar lazyMultiply(5)(10)</button>
+        <p>Resultado Multiplicación: <span id="res-lazy">-</span></p>
+    </section>
+
+    <!-- SECCIÓN 4: PIPAS DOBLES -->
+    <section>
+        <h2>4. Tuberías Dobles (doublePipe)</h2>
+        <p>Aplica un pipe doble con funciones de duplicar y sumar 3 sobre el valor inicial 10[cite: 21].</p>
+        <button id="btn-pipe">Ejecutar doublePipe</button>
+        <pre id="res-pipe">Haz clic para ver el resultado de la tubería doble...</pre>
+    </section>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
