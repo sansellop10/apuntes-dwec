@@ -1,0 +1,68 @@
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban DWEC</title>
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Kanban Síncrono</h1>
+    </header>
+
+    <form id="task-form">
+        <input type="text" id="task-title" placeholder="Título de la tarea" required="">
+        <select id="task-priority">
+            <option value="baja">Baja</option>
+            <option value="media" selected="">Media</option>
+            <option value="alta">Alta</option>
+        </select>
+        <button type="submit">Añadir</button>
+    </form>
+
+
+    <main class="kanban-board">
+
+        <section class="column" id="todo">
+
+            <h2>Por hacer</h2>
+
+            <article class="card" id="task-1">
+                <p class="card-title">Aprender módulos ES</p><span class="badge badge-alta">alta</span>
+                <div class="card-actions"><button class="btn-next">→</button><button class="btn-delete">🗑️</button>
+                </div>
+            </article>
+        </section>
+
+        <section class="column" id="in-progress">
+
+            <h2>En proceso</h2>
+
+            <article class="card" id="task-2">
+                <p class="card-title">Configurar Vite</p><span class="badge badge-media">media</span>
+                <div class="card-actions"><button class="btn-prev">←</button><button class="btn-next">→</button><button
+                        class="btn-delete">🗑️</button></div>
+            </article>
+
+        </section>
+
+        <section class="column" id="done">
+
+            <h2>Hecho</h2>
+
+            <article class="card" id="task-3">
+                <p class="card-title">Creación index.html</p><span class="badge badge-media">media</span>
+                <div class="card-actions"><button class="btn-prev">←</button><button class="btn-delete">🗑️</button>
+                </div>
+            </article>
+
+        </section>
+    </main>
+    <script type="module" src="src/js/main.js"></script>
+</body>
+
+</html>
